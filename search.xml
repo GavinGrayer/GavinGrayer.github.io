@@ -1280,37 +1280,36 @@
 <p>按功能分类<br>内连接：<br>等值连接、非等值连接、自连接</p>
 <p>外连接：<br>左外连接、右外连接、全外连接</p>
 <p>交叉连接</p>
-<h4 id="sql92标准使用"><a href="#sql92标准使用" class="headerlink" title="sql92标准使用"></a>sql92标准使用</h4><h6 id="1、等值连接"><a href="#1、等值连接" class="headerlink" title="1、等值连接"></a>1、等值连接</h6><blockquote>
+<h4 id="sql92标准使用"><a href="#sql92标准使用" class="headerlink" title="sql92标准使用"></a>sql92标准使用</h4><h5 id="1、等值连接"><a href="#1、等值连接" class="headerlink" title="1、等值连接"></a>1、等值连接</h5><blockquote>
 <p>① 多表等值连接的结果为多表的交集部分<br>②n表连接，至少需要n-1个连接条件<br>③ 多表的顺序没有要求<br>④一般需要为表起别名<br>⑤可以搭配前面介绍的所有子句使用，比如排序、分组、筛选</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#案例1：查询女神名和对应的男神名</span><br><span class="line">SELECT NAME,boyName </span><br><span class="line">FROM boys,beauty</span><br><span class="line">WHERE beauty.boyfriend_id= boys.id;</span><br><span class="line"></span><br><span class="line">#案例2：查询员工名和对应的部门名</span><br><span class="line"></span><br><span class="line">SELECT last_name,department_name</span><br><span class="line">FROM employees,departments</span><br><span class="line">WHERE employees.`department_id`=departments.`department_id`;</span><br></pre></td></tr></table></figure>
 
 
 
-<h6 id="2、为表起别名"><a href="#2、为表起别名" class="headerlink" title="2、为表起别名"></a>2、为表起别名</h6><p>注意：如果为表起了别名，则查询的字段就不能使用原来的表名去限定</p>
+<h5 id="2、为表起别名"><a href="#2、为表起别名" class="headerlink" title="2、为表起别名"></a>2、为表起别名</h5><p>注意：如果为表起了别名，则查询的字段就不能使用原来的表名去限定</p>
 <p>两个表的顺序可以调换</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#查询员工名、工种号、工种名</span><br><span class="line"></span><br><span class="line">SELECT e.last_name,e.job_id,j.job_title</span><br><span class="line">FROM employees  e,jobs j</span><br><span class="line">WHERE e.`job_id`=j.`job_id`;</span><br></pre></td></tr></table></figure>
 
 
 
-<h6 id="3、加筛选"><a href="#3、加筛选" class="headerlink" title="3、加筛选"></a>3、加筛选</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#案例：查询有奖金的员工名、部门名</span><br><span class="line"></span><br><span class="line">SELECT last_name,department_name,commission_pct</span><br><span class="line"></span><br><span class="line">FROM employees e,departments d</span><br><span class="line">WHERE e.`department_id`=d.`department_id`</span><br><span class="line">AND e.`commission_pct` IS NOT NULL;</span><br><span class="line"></span><br><span class="line">#案例2：查询城市名中第二个字符为o的部门名和城市名</span><br><span class="line"></span><br><span class="line">SELECT department_name,city</span><br><span class="line">FROM departments d,locations l</span><br><span class="line">WHERE d.`location_id` = l.`location_id`</span><br><span class="line">AND city LIKE &apos;_o%&apos;;</span><br></pre></td></tr></table></figure>
+<h5 id="3、加筛选"><a href="#3、加筛选" class="headerlink" title="3、加筛选"></a>3、加筛选</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#案例：查询有奖金的员工名、部门名</span><br><span class="line"></span><br><span class="line">SELECT last_name,department_name,commission_pct</span><br><span class="line"></span><br><span class="line">FROM employees e,departments d</span><br><span class="line">WHERE e.`department_id`=d.`department_id`</span><br><span class="line">AND e.`commission_pct` IS NOT NULL;</span><br><span class="line"></span><br><span class="line">#案例2：查询城市名中第二个字符为o的部门名和城市名</span><br><span class="line"></span><br><span class="line">SELECT department_name,city</span><br><span class="line">FROM departments d,locations l</span><br><span class="line">WHERE d.`location_id` = l.`location_id`</span><br><span class="line">AND city LIKE &apos;_o%&apos;;</span><br></pre></td></tr></table></figure>
 
 
 
-<h6 id="4、加分组"><a href="#4、加分组" class="headerlink" title="4、加分组"></a>4、加分组</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">#案例1：查询每个城市的部门个数</span><br><span class="line"></span><br><span class="line">SELECT COUNT(*) 个数,city</span><br><span class="line">FROM departments d,locations l</span><br><span class="line">WHERE d.`location_id`=l.`location_id`</span><br><span class="line">GROUP BY city;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#案例2：查询有奖金的每个部门的部门名和部门的领导编号和该部门的最低工资</span><br><span class="line">SELECT department_name,d.`manager_id`,MIN(salary)</span><br><span class="line">FROM departments d,employees e</span><br><span class="line">WHERE d.`department_id`=e.`department_id`</span><br><span class="line">AND commission_pct IS NOT NULL</span><br><span class="line">GROUP BY department_name,d.`manager_id`</span><br></pre></td></tr></table></figure>
+<h5 id="4、加分组"><a href="#4、加分组" class="headerlink" title="4、加分组"></a>4、加分组</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">#案例1：查询每个城市的部门个数</span><br><span class="line"></span><br><span class="line">SELECT COUNT(*) 个数,city</span><br><span class="line">FROM departments d,locations l</span><br><span class="line">WHERE d.`location_id`=l.`location_id`</span><br><span class="line">GROUP BY city;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#案例2：查询有奖金的每个部门的部门名和部门的领导编号和该部门的最低工资</span><br><span class="line">SELECT department_name,d.`manager_id`,MIN(salary)</span><br><span class="line">FROM departments d,employees e</span><br><span class="line">WHERE d.`department_id`=e.`department_id`</span><br><span class="line">AND commission_pct IS NOT NULL</span><br><span class="line">GROUP BY department_name,d.`manager_id`</span><br></pre></td></tr></table></figure>
 
-<h6 id="5、加排序"><a href="#5、加排序" class="headerlink" title="5、加排序"></a>5、加排序</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#案例：查询每个工种的工种名和员工的个数，并且按员工个数降序</span><br><span class="line"></span><br><span class="line">SELECT job_title,COUNT(*)</span><br><span class="line">FROM employees e,jobs j</span><br><span class="line">WHERE e.`job_id`=j.`job_id`</span><br><span class="line">GROUP BY job_title</span><br><span class="line">ORDER BY COUNT(*) DESC;</span><br></pre></td></tr></table></figure>
+<h5 id="5、加排序"><a href="#5、加排序" class="headerlink" title="5、加排序"></a>5、加排序</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#案例：查询每个工种的工种名和员工的个数，并且按员工个数降序</span><br><span class="line"></span><br><span class="line">SELECT job_title,COUNT(*)</span><br><span class="line">FROM employees e,jobs j</span><br><span class="line">WHERE e.`job_id`=j.`job_id`</span><br><span class="line">GROUP BY job_title</span><br><span class="line">ORDER BY COUNT(*) DESC;</span><br></pre></td></tr></table></figure>
 
-<p>6、实现三表连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT last_name,departmen t_name,city</span><br><span class="line">FROM employees e,departments d,locations l</span><br><span class="line">WHERE e.`department_id`=d.`department_id`</span><br><span class="line">AND d.`location_id`=l.`location_id`</span><br><span class="line">AND city LIKE &apos;s%&apos;</span><br><span class="line"></span><br><span class="line">ORDER BY department_name DESC;</span><br></pre></td></tr></table></figure>
-
-
-
-<h6 id="2、非等值连接"><a href="#2、非等值连接" class="headerlink" title="2、非等值连接"></a>2、非等值连接</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#案例1：查询员工的工资和工资级别</span><br><span class="line"></span><br><span class="line">SELECT salary,grade_level</span><br><span class="line">FROM employees e,job_grades g</span><br><span class="line">WHERE salary BETWEEN g.`lowest_sal` AND g.`highest_sal`;</span><br></pre></td></tr></table></figure>
+<h5 id="6、实现三表连接"><a href="#6、实现三表连接" class="headerlink" title="6、实现三表连接"></a>6、实现三表连接</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT last_name,departmen t_name,city</span><br><span class="line">FROM employees e,departments d,locations l</span><br><span class="line">WHERE e.`department_id`=d.`department_id`</span><br><span class="line">AND d.`location_id`=l.`location_id`</span><br><span class="line">AND city LIKE &apos;s%&apos;</span><br><span class="line"></span><br><span class="line">ORDER BY department_name DESC;</span><br></pre></td></tr></table></figure>
 
 
 
-<h6 id="6、自连接"><a href="#6、自连接" class="headerlink" title="6、自连接"></a>6、自连接</h6><p>自己连接自己</p>
+<h5 id="7、非等值连接"><a href="#7、非等值连接" class="headerlink" title="7、非等值连接"></a>7、非等值连接</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#案例1：查询员工的工资和工资级别</span><br><span class="line"></span><br><span class="line">SELECT salary,grade_level</span><br><span class="line">FROM employees e,job_grades g</span><br><span class="line">WHERE salary BETWEEN g.`lowest_sal` AND g.`highest_sal`;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="8、自连接"><a href="#8、自连接" class="headerlink" title="8、自连接"></a>8、自连接</h5><p>自己连接自己</p>
 <p><img alt="1560498906057" data-src="/images/MySQL%E5%9F%BA%E7%A1%80%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B/1560498906057.png" class="lazyload"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">案例：查询 员工名和上级的名称</span><br><span class="line"></span><br><span class="line">SELECT e.employee_id,e.last_name,m.employee_id,m.last_name</span><br><span class="line">FROM employees e,employees m</span><br><span class="line">WHERE e.`manager_id`=m.`employee_id`;</span><br></pre></td></tr></table></figure>
 
