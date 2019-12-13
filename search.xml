@@ -3753,6 +3753,14 @@ volatile并不能保证多个线程共同修改running变量时所带来的不�
 <p>在判断10000个数是否为素数上速度差距很大</p>
 <p><img alt="1552466241334" data-src="/images/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/1552466241334.png" class="lazyload"></p>
 ]]></content>
+      <categories>
+        <category>java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>多线程</tag>
+      </tags>
   </entry>
   <entry>
     <title>python实现微信公众号信息推送</title>
