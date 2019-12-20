@@ -1,3 +1,111 @@
-// build time:Fri Dec 20 2019 11:05:22 GMT+0800 (GMT+08:00)
-$(function(){var e=false;$("a.social-icon.search").on("click",function(){$("body").css("width","100%");$("body").css("overflow","hidden");$(".search-dialog").animate({},function(){$(".search-dialog").css({display:"block"}),300});$("#local-search-input input").focus();$(".search-mask").fadeIn();if(!e){t(GLOBAL_CONFIG.localSearch.path);e=true}document.addEventListener("keydown",function i(e){if(e.code==="Escape"){a();document.removeEventListener("keydown",i)}})});var a=function(){$("body").css("width","");$("body").css("overflow","");$(".search-dialog").css({animation:"search_close .5s"});$(".search-dialog").animate({},function(){setTimeout(function(){$(".search-dialog").css({animation:"",display:"none"})},500)});$(".search-mask").fadeOut()};$(".search-mask, .search-close-button").on("click",a);function t(e){$.ajax({url:GLOBAL_CONFIG.root+e,dataType:"xml",success:function(e){var a=$("entry",e).map(function(){return{title:$("title",this).text(),content:$("content",this).text(),url:$("url",this).text()}}).get();var t=$("#local-search-input input")[0];var i=$("#local-hits")[0];t.addEventListener("input",function(){var e='<div class="search-result-list">';var t=this.value.trim().toLowerCase().split(/[\s]+/);i.innerHTML="";if(this.value.trim().length<=0){$(".local-search-stats__hr").hide();return}var s=0;a.forEach(function(a){var i=true;var c=a.title.trim().toLowerCase();var r=a.content.trim().replace(/<[^>]+>/g,"").toLowerCase();var n=a.url;var o=-1;var l=-1;if(c!==""&&r!==""){t.forEach(function(e,a){o=c.indexOf(e);l=r.indexOf(e);if(o<0&&l<0){i=false}else{if(l<0){l=0}}})}if(i){e+='<div class="local-search__hit-item"><a href="'+n+'" class="search-result-title">'+c+"</a>"+"</div>";s+=1;$(".local-search-stats__hr").show()}});if(s===0){e+='<div id="local-search__hits-empty">'+GLOBAL_CONFIG.localSearch.languages.hits_empty.replace(/\$\{query}/,this.value.trim())+"</div>"}i.innerHTML=e})}})}});
-//rebuild by neat 
+$(function () {
+  var loadFlag = false
+  $('a.social-icon.search').on('click', function () {
+    $('body').css('width', '100%')
+    $('body').css('overflow', 'hidden')
+    $('.search-dialog').animate({}, function () {
+      $('.search-dialog').css({
+        'display': 'block'
+      }),300
+    })
+          $('#local-search-input input').focus()
+  
+          $('.search-mask').fadeIn();
+    if (!loadFlag) {
+      search(GLOBAL_CONFIG.localSearch.path)
+      loadFlag = true
+    }
+
+    // shortcut: ESC
+    document.addEventListener('keydown', function f(event) {
+      if (event.code === 'Escape') {
+        closeSearch()
+        document.removeEventListener('keydown', f)
+      }
+    })
+  })
+
+  var closeSearch = function () {
+    $('body').css('width', '')
+    $('body').css('overflow', '')
+    $('.search-dialog').css({
+      'animation': 'search_close .5s'
+    })
+
+    $('.search-dialog').animate({}, function () {
+
+      setTimeout(function () {
+        $('.search-dialog').css({
+          'animation': '',
+          'display': 'none'
+        })
+      },500)
+    })
+
+    $('.search-mask').fadeOut();
+  }
+  $('.search-mask, .search-close-button').on('click', closeSearch)
+
+  function search(path) {
+    $.ajax({
+      url: GLOBAL_CONFIG.root + path,
+      dataType: 'xml',
+      success: function (xmlResponse) {
+        // get the contents from search data
+        var datas = $('entry', xmlResponse).map(function () {
+          return {
+            title: $('title', this).text(),
+            content: $('content', this).text(),
+            url: $('url', this).text()
+          }
+        }).get()
+        var $input = $('#local-search-input input')[0]
+        var $resultContent = $('#local-hits')[0]
+        $input.addEventListener('input', function () {
+          var str = '<div class="search-result-list">'
+          var keywords = this.value.trim().toLowerCase().split(/[\s]+/)
+          $resultContent.innerHTML = ''
+          if (this.value.trim().length <= 0) {
+            $('.local-search-stats__hr').hide()
+            return
+          }
+          var count = 0
+          // perform local searching
+          datas.forEach(function (data) {
+            var isMatch = true
+            var dataTitle = data.title.trim().toLowerCase()
+            var dataContent = data.content.trim().replace(/<[^>]+>/g, '').toLowerCase()
+            var dataUrl = data.url
+            var indexTitle = -1
+            var indexContent = -1
+            // only match artiles with not empty titles and contents
+            if (dataTitle !== '' && dataContent !== '') {
+              keywords.forEach(function (keyword, i) {
+                indexTitle = dataTitle.indexOf(keyword)
+                indexContent = dataContent.indexOf(keyword)
+                if (indexTitle < 0 && indexContent < 0) {
+                  isMatch = false
+                } else {
+                  if (indexContent < 0) {
+                    indexContent = 0
+                  }
+                }
+              })
+            }
+            // show search results
+            if (isMatch) {
+              str += '<div class="local-search__hit-item"><a href="' + dataUrl + '" class="search-result-title">' + dataTitle + '</a>' + '</div>'
+              count += 1
+              $('.local-search-stats__hr').show()
+            }
+          })
+          if (count === 0) {
+            str += '<div id="local-search__hits-empty">' + GLOBAL_CONFIG.localSearch.languages.hits_empty.replace(/\$\{query}/, this.value.trim()) +
+              '</div>'
+          }
+          $resultContent.innerHTML = str
+        })
+      }
+    })
+  }
+})
