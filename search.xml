@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>java设计模式</title>
+    <title>Java设计模式</title>
     <url>/2019/12/23/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="内容介绍"><a href="#内容介绍" class="headerlink" title="内容介绍"></a>内容介绍</h1><h2 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h2><h3 id="原型设计模式问题"><a href="#原型设计模式问题" class="headerlink" title="原型设计模式问题"></a>原型设计模式问题</h3><p><img alt="image-20191128144745969" data-src="http://img.mxranger.cn/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/image-20191128144745969.png" class="lazyload"></p>
 <p><img alt="image-20191128144821208" data-src="http://img.mxranger.cn/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/image-20191128144821208.png" class="lazyload"></p>
@@ -1358,6 +1358,12 @@
 <li>调试不方便。采用了类似递归的方式，调试时逻辑可能比较复杂</li>
 </ol>
 ]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
   </entry>
   <entry>
     <title>MySQL高级教程</title>
