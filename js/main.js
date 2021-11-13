@@ -855,6 +855,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tabsFn.clickFnOfTabs()
     tabsFn.backToTop()
     switchComments()
+    document.write('<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />')
   }
 
   refreshFn()
