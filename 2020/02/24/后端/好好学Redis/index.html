@@ -1,0 +1,622 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>好好学Redis | MxRanger's Blog</title><meta name="keywords" content="redis"><meta name="author" content="慕·歌"><meta name="copyright" content="慕·歌"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Redis介绍 使用Redis的特点  可以干什么     Linux目录结构 Windows目录结构    &#x2F;usr program files   安装1、确保Linux已经安装gcc2、下载Redis 1wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-4.0.1.tar.gz  3、解压 1tar -zxvf redis-4.0.1.tar.gz 4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="好好学Redis">
+<meta property="og:url" content="http://example.com/2020/02/24/%E5%90%8E%E7%AB%AF/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/index.html">
+<meta property="og:site_name" content="MxRanger&#39;s Blog">
+<meta property="og:description" content="Redis介绍 使用Redis的特点  可以干什么     Linux目录结构 Windows目录结构    &#x2F;usr program files   安装1、确保Linux已经安装gcc2、下载Redis 1wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-4.0.1.tar.gz  3、解压 1tar -zxvf redis-4.0.1.tar.gz 4">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3127962649,1328757895&fm=26&gp=0.jpg">
+<meta property="article:published_time" content="2020-02-24T04:35:55.000Z">
+<meta property="article:modified_time" content="2020-03-01T07:06:07.110Z">
+<meta property="article:author" content="慕·歌">
+<meta property="article:tag" content="redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3127962649,1328757895&fm=26&gp=0.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/02/24/%E5%90%8E%E7%AB%AF/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '好好学Redis',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-03-01 15:06:07'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="MxRanger's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/images/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">31</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book"><i class="fa-fw fa fa-book"></i><span> 书籍</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3127962649,1328757895&amp;fm=26&amp;gp=0.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MxRanger's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book"><i class="fa-fw fa fa-book"></i><span> 书籍</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">好好学Redis</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-02-24T04:35:55.000Z" title="发表于 2020-02-24 12:35:55">2020-02-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-01T07:06:07.110Z" title="更新于 2020-03-01 15:06:07">2020-03-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/redis/">redis</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="好好学Redis"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220160345373.png" alt="image-20200220160345373"></p>
+<p><strong>使用Redis的特点</strong></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220160421472.png" alt="image-20200220160421472"></p>
+<p><strong>可以干什么</strong></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220160700761.png" alt="image-20200220160700761"></p>
+<table>
+<thead>
+<tr>
+<th>Linux目录结构</th>
+<th>Windows目录结构</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/usr</td>
+<td>program files</td>
+</tr>
+</tbody></table>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>1、确保Linux已经安装gcc<br>2、下载Redis</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-4.0.1.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>3、解压</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf redis-4.0.1.tar.gz</span><br></pre></td></tr></table></figure>
+<p>4、进入目录后编译</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd redis-4.0.1</span><br><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure>
+<p>5、安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make PREFIX=/usr/local/redis install #指定安装目录为/usr/local/redis</span><br></pre></td></tr></table></figure>
+<p>6、启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis/bin/redis-server [可以指定自定义的redis.conf]</span><br><span class="line">redis-server ./redis.conf</span><br></pre></td></tr></table></figure>
+
+<p>7、查看redis服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep redis</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220164800192.png" alt="image-20200220164800192"></p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set key1 helloworld</span><br><span class="line">get key1</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="单进程"><a href="#单进程" class="headerlink" title="单进程"></a>单进程</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220165149380.png" alt="image-20200220165149380"></p>
+<h3 id="切换数据库"><a href="#切换数据库" class="headerlink" title="切换数据库"></a>切换数据库</h3><p>默认有16个数据库，类似数组下标，初始为零号库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">select [number]</span></span><br><span class="line">select 7</span><br></pre></td></tr></table></figure>
+
+<h3 id="DBSIZE"><a href="#DBSIZE" class="headerlink" title="DBSIZE"></a>DBSIZE</h3><p>查看当前数据库的数量</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220165716187.png" alt="image-20200220165716187"></p>
+<p>查询当前数据库所有的key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> keys</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>可以模糊查询key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> keys n*</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220165930609.png" alt="image-20200220165930609"></p>
+<h3 id="清除数据库"><a href="#清除数据库" class="headerlink" title="清除数据库"></a>清除数据库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> FLUSHDB  <span class="comment"># 清空当前数据库</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> FLUSHALL	<span class="comment">#清空所有数据库</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Redis键"><a href="#Redis键" class="headerlink" title="Redis键"></a>Redis键</h2><h3 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220173027735.png" alt="image-20200220173027735"></p>
+<h3 id="常见操作"><a href="#常见操作" class="headerlink" title="常见操作"></a>常见操作</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220172736987.png" alt="image-20200220172736987"></p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><blockquote>
+<p>五种数据类型</p>
+<p>string、hash、list、set、zset</p>
+<p><a target="_blank" rel="noopener" href="http://redisdoc.com/">redis常见命令地址</a></p>
+</blockquote>
+<h2 id="String字符串"><a href="#String字符串" class="headerlink" title="String字符串"></a>String字符串</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p>string是redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。</p>
+<p>string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象 。</p>
+<p>string类型是Redis最基本的数据类型，一个redis中字符串value最多可以是512M<strong>（不要把内存当硬盘用）</strong></p>
+<h3 id="常用-1"><a href="#常用-1" class="headerlink" title="常用"></a>常用</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220173815999.png" alt="image-20200220173815999"></p>
+<h4 id="set、get、del、append、strlen"><a href="#set、get、del、append、strlen" class="headerlink" title="set、get、del、append、strlen"></a>set、get、del、append、strlen</h4><p>设置key的值，获取key的值，删除key的值，key值的字符串长度</p>
+<h4 id="incr、decr、incrby、decrby"><a href="#incr、decr、incrby、decrby" class="headerlink" title="incr、decr、incrby、decrby"></a>incr、decr、incrby、decrby</h4><p>++、–、增加指定数、减少指定数</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222151231077.png" alt="image-20200222151231077"></p>
+<h4 id="getrange-、setrange"><a href="#getrange-、setrange" class="headerlink" title="getrange 、setrange"></a>getrange 、setrange</h4><p>getrange:获取指定区间范围内的值，类似substr截取、between……and的关系</p>
+<p><span style="color:red"><strong>从零到负一表示全部</strong></span></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222150703570.png" alt="image-20200222150703570"></p>
+<p>setrange设置替换区间范围内的值（类似replace），格式是setrange key值 具体值</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222150931021.png" alt="image-20200222150931021"></p>
+<h4 id="setex-set-with-expire"><a href="#setex-set-with-expire" class="headerlink" title="setex(set with expire)"></a>setex(set with expire)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//setex:设置带过期时间的key，动态设置</span><br><span class="line">setex 键 秒值 真实值</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222151510726.png" alt="image-20200222151510726"></p>
+<h4 id="setnx-set-if-not-exist"><a href="#setnx-set-if-not-exist" class="headerlink" title="setnx(set if not exist)"></a>setnx(set if not exist)</h4><p>setnx:只有在 key 不存在时设置 key 的值</p>
+<p><strong>若存在返回0，若不存在返回1</strong></p>
+<h4 id="mset、mget"><a href="#mset、mget" class="headerlink" title="mset、mget"></a>mset、mget</h4><p>可以set或get多个key值</p>
+<p><span style="color:red"><strong>注意：只能用在key都不存在的情况，若有一个存在，则整个失效，类似事务一样后面都为set</strong></span></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222152031029.png" alt="image-20200222152031029"></p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200220172544551.png" alt="image-20200220172544551"></p>
+<h2 id="List列表"><a href="#List列表" class="headerlink" title="List列表"></a>List列表</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素导列表的<strong>头部（左边）或者尾部（右边）</strong>（<strong>头左尾右</strong>）。<br><strong>它的底层实际是个链表</strong></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222152926519.png" alt="image-20200222152926519"></p>
+<h4 id="lpush、rpush、lrange"><a href="#lpush、rpush、lrange" class="headerlink" title="lpush、rpush、lrange"></a>lpush、rpush、lrange</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222153253006.png" alt="image-20200222153253006"></p>
+<h4 id="lpop、rpop"><a href="#lpop、rpop" class="headerlink" title="lpop、rpop"></a>lpop、rpop</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222153550509.png" alt="image-20200222153550509"></p>
+<h4 id="lindex"><a href="#lindex" class="headerlink" title="lindex"></a>lindex</h4><p>索引和数组下标一样</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222153800971.png" alt="image-20200222153800971"></p>
+<h4 id="llen"><a href="#llen" class="headerlink" title="llen"></a>llen</h4><p>查看当前list长度</p>
+<h4 id="lrem"><a href="#lrem" class="headerlink" title="lrem"></a>lrem</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrem key 删n个value</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222153949997.png" alt="image-20200222153949997"></p>
+<h4 id="ltrim"><a href="#ltrim" class="headerlink" title="ltrim"></a>ltrim</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222154120405.png" alt="image-20200222154120405"></p>
+<h4 id="rpoplpush"><a href="#rpoplpush" class="headerlink" title="rpoplpush"></a>rpoplpush</h4><p>（头l 尾r）</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222154446518.png" alt="image-20200222154446518"></p>
+<h4 id="linsert-key-after-before"><a href="#linsert-key-after-before" class="headerlink" title="linsert key after/before"></a>linsert key after/before</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222154808994.png" alt="image-20200222154808994"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>它是一个字符串链表，left、right都可以插入添加；</li>
+<li>如果键不存在，创建新的链表；</li>
+<li>如果键已存在，新增内容；</li>
+<li>如果值全移除，对应的键也就消失了。</li>
+<li>链表的操作无论是头和尾效率都极高，但假如是对中间元素进行操作，效率就很惨淡了。</li>
+</ul>
+<h3 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222152845085.png" alt="image-20200222152845085"></p>
+<h2 id="Set集合"><a href="#Set集合" class="headerlink" title="Set集合"></a>Set集合</h2><h3 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h3><p>Redis的Set是string类型的无序集合。</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222155829058.png" alt="image-20200222155829058"></p>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><h4 id="sadd、smembers、sismember"><a href="#sadd、smembers、sismember" class="headerlink" title="sadd、smembers、sismember"></a>sadd、smembers、sismember</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222155408570.png" alt="image-20200222155408570"></p>
+<h4 id="srem-key-value"><a href="#srem-key-value" class="headerlink" title="srem key value"></a>srem key value</h4><p>删除某个值，因为set不重复，只会删除一个</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222155658039.png" alt="image-20200222155658039"></p>
+<h4 id="smove"><a href="#smove" class="headerlink" title="smove"></a>smove</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222161208031.png" alt="image-20200222161208031"></p>
+<h4 id="数学集合类"><a href="#数学集合类" class="headerlink" title="数学集合类"></a>数学集合类</h4><p>sdiff：在第一个set里面而不在后面任何一个set里面的项</p>
+<p>sinter：交集</p>
+<p>sunion：并集</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222161431601.png" alt="image-20200222161431601"></p>
+<h3 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222155006744.png" alt="image-20200222155006744"></p>
+<h2 id="Hash哈希"><a href="#Hash哈希" class="headerlink" title="Hash哈希"></a>Hash哈希</h2><h3 id="介绍-4"><a href="#介绍-4" class="headerlink" title="介绍"></a>介绍</h3><p>Redis hash 是一个键值对集合。<br>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。</p>
+<p><strong>类似Java里面的Map&lt;String,Object&gt;</strong></p>
+<p>K,V模式不变，但是V是一个键值对</p>
+<h3 id="使用-2"><a href="#使用-2" class="headerlink" title="使用"></a>使用</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222162019544.png" alt="image-20200222162019544"></p>
+<h4 id="hset、hget、hmset、hmget、hgetall、hdel"><a href="#hset、hget、hmset、hmget、hgetall、hdel" class="headerlink" title="hset、hget、hmset、hmget、hgetall、hdel"></a>hset、hget、hmset、hmget、hgetall、hdel</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222162218442.png" alt="image-20200222162218442"></p>
+<h4 id="hlen"><a href="#hlen" class="headerlink" title="hlen"></a>hlen</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222162446604.png" alt="image-20200222162446604"></p>
+<h4 id="hexists"><a href="#hexists" class="headerlink" title="hexists"></a>hexists</h4><p>查看key中某个key，有返回1，没有返回0</p>
+<h4 id="hkeys、hvals"><a href="#hkeys、hvals" class="headerlink" title="hkeys、hvals"></a>hkeys、hvals</h4><p>hkeys：获取key中v里的所有key</p>
+<p>hvals：获取key红v里的所有v</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222162619354.png" alt="image-20200222162619354"></p>
+<h4 id="hincrby、hincrbyfloat"><a href="#hincrby、hincrbyfloat" class="headerlink" title="hincrby、hincrbyfloat"></a>hincrby、hincrbyfloat</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222162906865.png" alt="image-20200222162906865"></p>
+<h3 id="常用命令-3"><a href="#常用命令-3" class="headerlink" title="常用命令"></a>常用命令</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222161636294.png" alt="image-20200222161636294"></p>
+<h2 id="Zset-sorted-set-有序集合"><a href="#Zset-sorted-set-有序集合" class="headerlink" title="Zset(sorted set)有序集合"></a>Zset(sorted set)有序集合</h2><h3 id="介绍-5"><a href="#介绍-5" class="headerlink" title="介绍"></a>介绍</h3><p>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。<br><span style="color:red"><strong>不同的是每个元素都会关联一个double类型的分数。</strong></span><br>redis正是通过分数来为集合中的成员进行从小到大的排序。<span style="color:red"><strong>zset的成员是唯一的,但分数(score)却可以重复。</strong></span></p>
+<table>
+<thead>
+<tr>
+<th>set</th>
+<th>zset</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sadd  [key] [val1] …….</td>
+<td>zadd [key] [score1,val1],[score2,val2] ……</td>
+</tr>
+</tbody></table>
+<h3 id="使用-3"><a href="#使用-3" class="headerlink" title="使用"></a>使用</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222165626788.png" alt="image-20200222165626788"></p>
+<h4 id="zadd、zrange"><a href="#zadd、zrange" class="headerlink" title="zadd、zrange"></a>zadd、zrange</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222164856569.png" alt="image-20200222164856569"></p>
+<h4 id="zrangebyscore"><a href="#zrangebyscore" class="headerlink" title="zrangebyscore"></a>zrangebyscore</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222165117282.png" alt="image-20200222165117282"></p>
+<h4 id="zrem"><a href="#zrem" class="headerlink" title="zrem"></a>zrem</h4><p>删除元素</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222165331172.png" alt="image-20200222165331172"></p>
+<h4 id="zcard、zcount、zrank、zscore"><a href="#zcard、zcount、zrank、zscore" class="headerlink" title="zcard、zcount、zrank、zscore"></a>zcard、zcount、zrank、zscore</h4><p><strong>zcard ：获取集合中元素个数</strong></p>
+<p> <img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222165605141.png" alt="image-20200222165605141"></p>
+<p><strong>zcount ：获取分数区间内元素个数，zcount key 开始分数区间 结束分数区间</strong></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222165750231.png" alt="image-20200222165750231"></p>
+<p><strong>zrank： 获取value在zset中的下标位置</strong></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222165756703.png" alt="image-20200222165756703"></p>
+<p><strong>zscore：按照值获得对应的分数</strong></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222165805924.png" alt="image-20200222165805924"></p>
+<h4 id="zrerank"><a href="#zrerank" class="headerlink" title="zrerank"></a>zrerank</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222170054002.png" alt="image-20200222170054002"></p>
+<h4 id="zrevrange"><a href="#zrevrange" class="headerlink" title="zrevrange"></a>zrevrange</h4><p>逆序取范围</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222170149367.png" alt="image-20200222170149367"></p>
+<h4 id="zrevrangebyscore"><a href="#zrevrangebyscore" class="headerlink" title="zrevrangebyscore"></a>zrevrangebyscore</h4><p>分数反过来的</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222171323872.png" alt="image-20200222171323872"></p>
+<h3 id="常用命令-4"><a href="#常用命令-4" class="headerlink" title="常用命令"></a>常用命令</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222163053499.png" alt="image-20200222163053499"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222163103051.png" alt="image-20200222163103051"></p>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>在解压的redis文件夹下有redis.conf</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222172050632.png" alt="image-20200222172050632"></p>
+<h2 id="units单位"><a href="#units单位" class="headerlink" title="units单位"></a>units单位</h2><p> <img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222172653902.png" alt="image-20200222172653902"></p>
+<p>1 、配置大小单位,开头定义了一些基本的度量单位，只支持bytes，不支持bit<br>2、 对大小写不敏感</p>
+<h2 id="include"><a href="#include" class="headerlink" title="include"></a>include</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222172823841.png" alt="image-20200222172823841"></p>
+<p>和我们的Struts2配置文件类似，可以通过includes包含，redis.conf可以作为总闸，包含其他</p>
+<h2 id="general通用"><a href="#general通用" class="headerlink" title="general通用"></a>general通用</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173217417.png" alt="image-20200222173217417"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173237615.png" alt="image-20200222173237615"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173359390.png" alt="image-20200222173359390"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173417728.png" alt="image-20200222173417728"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173429470.png" alt="image-20200222173429470"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173437030.png" alt="image-20200222173437030"></p>
+<h2 id="SNAPSHOTTING快照"><a href="#SNAPSHOTTING快照" class="headerlink" title="SNAPSHOTTING快照"></a>SNAPSHOTTING快照</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173813278.png" alt="image-20200222173813278"></p>
+<h3 id="save"><a href="#save" class="headerlink" title="save"></a>save</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173832295.png" alt="image-20200222173832295"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173902478.png" alt="image-20200222173902478"></p>
+<h3 id="stop-write-on-bgsave-error"><a href="#stop-write-on-bgsave-error" class="headerlink" title="stop-write-on-bgsave-error"></a>stop-write-on-bgsave-error</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222173920695.png" alt="image-20200222173920695"></p>
+<p>……………….</p>
+<h3 id="redcompression"><a href="#redcompression" class="headerlink" title="redcompression"></a>redcompression</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222174057182.png" alt="image-20200222174057182"></p>
+<h3 id="rdbchecksum"><a href="#rdbchecksum" class="headerlink" title="rdbchecksum"></a>rdbchecksum</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222174128623.png" alt="image-20200222174128623"></p>
+<h2 id="replication复制"><a href="#replication复制" class="headerlink" title="replication复制"></a>replication复制</h2><h2 id="security安全"><a href="#security安全" class="headerlink" title="security安全"></a>security安全</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222174821400.png" alt="image-20200222174821400"></p>
+<h2 id="limits限制"><a href="#limits限制" class="headerlink" title="limits限制"></a>limits限制</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222191310711.png" alt="image-20200222191310711"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200222191326135.png" alt="image-20200222191326135"></p>
+<h2 id="append-only-mode"><a href="#append-only-mode" class="headerlink" title="append only mode"></a>append only mode</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223115853191.png" alt="image-20200223115853191"></p>
+<h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><p>redis.conf 配置项说明如下：</p>
+<ol>
+<li><p>Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程<br> daemonize no</p>
+</li>
+<li><p>当Redis以守护进程方式运行时，Redis默认会把pid写入/var/run/redis.pid文件，可以通过pidfile指定<br> pidfile /var/run/redis.pid</p>
+</li>
+<li><p>指定Redis监听端口，默认端口为6379，作者在自己的一篇博文中解释了为什么选用6379作为默认端口，因为6379在手机按键上MERZ对应的号码，而MERZ取自意大利歌女Alessia Merz的名字<br> port 6379</p>
+</li>
+<li><p>绑定的主机地址<br> bind 127.0.0.1</p>
+</li>
+<li><p>当 客户端闲置多长时间后关闭连接，如果指定为0，表示关闭该功能<br>  timeout 300</p>
+</li>
+<li><p>指定日志记录级别，Redis总共支持四个级别：debug、verbose、notice、warning，默认为verbose<br> loglevel verbose</p>
+</li>
+<li><p>日志记录方式，默认为标准输出，如果配置Redis为守护进程方式运行，而这里又配置为日志记录方式为标准输出，则日志将会发送给/dev/null<br> logfile stdout</p>
+</li>
+<li><p>设置数据库的数量，默认数据库为0，可以使用SELECT <dbid>命令在连接上指定数据库id<br> databases 16</p>
+</li>
+<li><p>指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合<br> save <seconds> <changes><br> Redis默认配置文件中提供了三个条件：<br> save 900 1<br> save 300 10<br> save 60 10000<br> 分别表示900秒（15分钟）内有1个更改，300秒（5分钟）内有10个更改以及60秒内有10000个更改。</p>
+</li>
+<li><p>指定存储至本地数据库时是否压缩数据，默认为yes，Redis采用LZF压缩，如果为了节省CPU时间，可以关闭该选项，但会导致数据库文件变的巨大<br>rdbcompression yes</p>
+</li>
+<li><p>指定本地数据库文件名，默认值为dump.rdb<br>dbfilename dump.rdb</p>
+</li>
+<li><p>指定本地数据库存放目录<br>dir ./</p>
+</li>
+<li><p>设置当本机为slav服务时，设置master服务的IP地址及端口，在Redis启动时，它会自动从master进行数据同步<br>slaveof <masterip> <masterport></p>
+</li>
+<li><p>当master服务设置了密码保护时，slav服务连接master的密码<br>masterauth <master-password></p>
+</li>
+<li><p>设置Redis连接密码，如果配置了连接密码，客户端在连接Redis时需要通过AUTH <password>命令提供密码，默认关闭<br>requirepass foobared</p>
+</li>
+<li><p>设置同一时间最大客户端连接数，默认无限制，Redis可以同时打开的客户端连接数为Redis进程可以打开的最大文件描述符数，如果设置 maxclients 0，表示不作限制。当客户端连接数到达限制时，Redis会关闭新的连接并向客户端返回max number of clients reached错误信息<br>maxclients 128</p>
+</li>
+<li><p>指定Redis最大内存限制，Redis在启动时会把数据加载到内存中，达到最大内存后，Redis会先尝试清除已到期或即将到期的Key，当此方法处理 后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以进行读取操作。Redis新的vm机制，会把Key存放内存，Value会存放在swap区<br>maxmemory <bytes></p>
+</li>
+<li><p>指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。因为 redis本身同步数据文件是按上面save条件来同步的，所以有的数据会在一段时间内只存在于内存中。默认为no<br>appendonly no</p>
+</li>
+<li><p>指定更新日志文件名，默认为appendonly.aof<br>  appendfilename appendonly.aof</p>
+</li>
+<li><p>指定更新日志条件，共有3个可选值：<br>no：表示等操作系统进行数据缓存同步到磁盘（快）<br>always：表示每次更新操作后手动调用fsync()将数据写到磁盘（慢，安全）<br>everysec：表示每秒同步一次（折衷，默认值）<br>appendfsync everysec</p>
+</li>
+<li><p>指定是否启用虚拟内存机制，默认值为no，简单的介绍一下，VM机制将数据分页存放，由Redis将访问量较少的页即冷数据swap到磁盘上，访问多的页面由磁盘自动换出到内存中（在后面的文章我会仔细分析Redis的VM机制）<br>  vm-enabled no</p>
+</li>
+<li><p>虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享<br>  vm-swap-file /tmp/redis.swap</p>
+</li>
+<li><p>将所有大于vm-max-memory的数据存入虚拟内存,无论vm-max-memory设置多小,所有索引数据都是内存存储的(Redis的索引数据 就是keys),也就是说,当vm-max-memory设置为0的时候,其实是所有value都存在于磁盘。默认值为0<br>  vm-max-memory 0</p>
+</li>
+<li><p>Redis swap文件分成了很多的page，一个对象可以保存在多个page上面，但一个page上不能被多个对象共享，vm-page-size是要根据存储的 数据大小来设定的，作者建议如果存储很多小对象，page大小最好设置为32或者64bytes；如果存储很大大对象，则可以使用更大的page，如果不 确定，就使用默认值<br>  vm-page-size 32</p>
+</li>
+<li><p>设置swap文件中的page数量，由于页表（一种表示页面空闲或使用的bitmap）是在放在内存中的，，在磁盘上每8个pages将消耗1byte的内存。<br>  vm-pages 134217728</p>
+</li>
+<li><p>设置访问swap文件的线程数,最好不要超过机器的核数,如果设置为0,那么所有对swap文件的操作都是串行的，可能会造成比较长时间的延迟。默认值为4<br>  vm-max-threads 4</p>
+</li>
+<li><p>设置在向客户端应答时，是否把较小的包合并为一个包发送，默认为开启<br>glueoutputbuf yes</p>
+</li>
+<li><p>指定在超过一定的数量或者最大的元素超过某一临界值时，采用一种特殊的哈希算法<br>hash-max-zipmap-entries 64<br>hash-max-zipmap-value 512</p>
+</li>
+<li><p>指定是否激活重置哈希，默认为开启（后面在介绍Redis的哈希算法时具体介绍）<br>activerehashing yes</p>
+</li>
+<li><p>指定包含其它的配置文件，可以在同一主机上多个Redis实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件<br>include /path/to/local.conf</p>
+</li>
+</ol>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><blockquote>
+<p>提供了两种持久化方式：RDB、ADF</p>
+</blockquote>
+<h2 id="RDB-Redis-DataBase"><a href="#RDB-Redis-DataBase" class="headerlink" title="RDB(Redis DataBase)"></a>RDB(Redis DataBase)</h2><h3 id="介绍-6"><a href="#介绍-6" class="headerlink" title="介绍"></a>介绍</h3><p><span style="color:red"><strong>每隔几分钟备份一次</strong></span></p>
+<p><strong>RDB保存的文件是dump.rdb文件</strong></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223101052722.png" alt="image-20200223101052722"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223101235008.png" alt="image-20200223101235008"></p>
+<h3 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223101533762.png" alt="image-20200223101533762"></p>
+<h3 id="save配置"><a href="#save配置" class="headerlink" title="save配置"></a>save配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save 秒 操作次数</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223102322549.png" alt="image-20200223102322549"></p>
+<h3 id="触发RDB快照"><a href="#触发RDB快照" class="headerlink" title="触发RDB快照"></a>触发RDB快照</h3><h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>设置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save 120 10</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223102628156.png" alt="image-20200223102628156"></p>
+<p><strong>执行flushall命令，也会产生dump.rdb文件，但是里面是空的，没有意义。</strong></p>
+<p>但是当执行执行shutdown时，会触发redis持久化，会先保存磁盘，然后关闭</p>
+<h3 id="禁用RDB持久化"><a href="#禁用RDB持久化" class="headerlink" title="禁用RDB持久化"></a>禁用RDB持久化</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223103857966.png" alt="image-20200223103857966"></p>
+<h3 id="save命令"><a href="#save命令" class="headerlink" title="save命令"></a>save命令</h3><p>可以手动将数据持久化</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223104044170.png" alt="image-20200223104044170"></p>
+<p>[SNAPSHOTTING快照](# SNAPSHOTTING快照)</p>
+<h3 id="停止"><a href="#停止" class="headerlink" title="停止"></a>停止</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223113029893.png" alt="image-20200223113029893"></p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223112921122.png" alt="image-20200223112921122"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223112930236.png" alt="image-20200223112930236"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223113002453.png" alt="image-20200223113002453"></p>
+<h2 id="AOF（Append-Only-File）"><a href="#AOF（Append-Only-File）" class="headerlink" title="AOF（Append Only File）"></a>AOF（Append Only File）</h2><h3 id="介绍-7"><a href="#介绍-7" class="headerlink" title="介绍"></a>介绍</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223113856646.png" alt="image-20200223113856646"></p>
+<p><strong>保存文件为appendonly.aof文件</strong></p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>改为yes启动</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223114014359.png" alt="image-20200223114014359"></p>
+<h3 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h3><p>当appendonly.aof和dump.db文件都存在时，先执行appendonly.aof文件</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223115342811.png" alt="image-20200223115342811"></p>
+<h4 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h4><p>当appendonly.aof文件损坏后，启动redis无效</p>
+<p>需要使用redios-check-aof进行修复，将无效的语法删除</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223115545850.png" alt="image-20200223115545850"></p>
+<p>然后重新启动redis即可</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223115645588.png" alt="image-20200223115645588"></p>
+<h3 id="常见配置"><a href="#常见配置" class="headerlink" title="常见配置"></a>常见配置</h3><p>[append only mode](# append only mode)</p>
+<h3 id="Rewrite"><a href="#Rewrite" class="headerlink" title="Rewrite"></a>Rewrite</h3><h4 id="介绍-8"><a href="#介绍-8" class="headerlink" title="介绍"></a>介绍</h4><p>给自己瘦身</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223120441325.png" alt="image-20200223120441325"></p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223120908510.png" alt="image-20200223120908510"></p>
+<p>在redis.conf中</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223121233046.png" alt="image-20200223121233046"></p>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223121458945.png" alt="image-20200223121458945"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223121532064.png" alt="image-20200223121532064"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200223121832554.png" alt="image-20200223121832554"></p>
+<h3 id="性能建议"><a href="#性能建议" class="headerlink" title="性能建议"></a>性能建议</h3><p>因为RDB文件只用作后备用途，建议只在Slave上持久化RDB文件，而且只要15分钟备份一次就够了，只保留save 900 1这条规则。</p>
+<p>如果Enalbe AOF，好处是在最恶劣情况下也只会丢失不超过两秒数据，启动脚本较简单只load自己的AOF文件就可以了。代价一是带来了持续的IO，二是AOF rewrite的最后将rewrite过程中产生的新数据写到新文件造成的阻塞几乎是不可避免的。只要硬盘许可，应该尽量减少AOF rewrite的频率，AOF重写的基础大小默认值64M太小了，可以设到5G以上。默认超过原大小100%大小时重写可以改到适当的数值。</p>
+<p>如果不Enable AOF ，仅靠<strong>Master-Slave Replication</strong> 实现高可用性也可以。能省掉一大笔IO也减少了rewrite时带来的系统波动。代价是如果Master/Slave同时倒掉，会丢失十几分钟的数据，启动脚本也要比较两个Master/Slave中的RDB文件，载入较新的那个。<strong>新浪微博就选用了这种架构</strong></p>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><h2 id="介绍-9"><a href="#介绍-9" class="headerlink" title="介绍"></a>介绍</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224101729712.png" alt="image-20200224101729712"></p>
+<h2 id="常用命令-5"><a href="#常用命令-5" class="headerlink" title="常用命令"></a>常用命令</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224102121387.png" alt="image-20200224102121387"></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224120354178.png" alt="image-20200224120354178"></p>
+<h2 id="正常使用"><a href="#正常使用" class="headerlink" title="正常使用"></a>正常使用</h2><p>在事务过程中只是入队，并未执行</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224105520903.png" alt="image-20200224105520903"></p>
+<h2 id="放弃事务"><a href="#放弃事务" class="headerlink" title="放弃事务"></a>放弃事务</h2><p>discard</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224105935295.png" alt="image-20200224105935295"></p>
+<h2 id="全体连坐"><a href="#全体连坐" class="headerlink" title="全体连坐"></a>全体连坐</h2><p>在过程中就报错了，相当于java中编译错误</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224112527799.png" alt="image-20200224112527799"></p>
+<h2 id="冤头债主"><a href="#冤头债主" class="headerlink" title="冤头债主"></a>冤头债主</h2><p>执行错的报错，正确的继续执行，相当于java中运行时异常</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224112655302.png" alt="image-20200224112655302"></p>
+<h2 id="watch监控"><a href="#watch监控" class="headerlink" title="watch监控"></a>watch监控</h2><h3 id="悲观锁、乐观锁"><a href="#悲观锁、乐观锁" class="headerlink" title="悲观锁、乐观锁"></a>悲观锁、乐观锁</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224120102334.png" alt="image-20200224120102334"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224120113725.png" alt="image-20200224120113725"></p>
+<p>watch使用的就是CAS策略</p>
+<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><p>1、debt表示可用额度，balance表示使用金额</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224114556387.png" alt="image-20200224114556387"></p>
+<p>2、先使用watch监控，再multi，保证两笔金额变动在同一个事务里</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224114753394.png" alt="image-20200224114753394"></p>
+<p>3、另一个线程要修改</p>
+<p>CAS策略，先比较不同就报错</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224115851431.png" alt="image-20200224115851431"></p>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224120244726.png" alt="image-20200224120244726"></p>
+<h2 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224120428982.png" alt="image-20200224120428982"></p>
+<h1 id="消息订阅发布"><a href="#消息订阅发布" class="headerlink" title="消息订阅发布"></a>消息订阅发布</h1><h2 id="介绍-10"><a href="#介绍-10" class="headerlink" title="介绍"></a>介绍</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224121051341.png" alt="image-20200224121051341"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224121101059.png" alt="image-20200224121101059"></p>
+<h2 id="常用命令-6"><a href="#常用命令-6" class="headerlink" title="常用命令"></a>常用命令</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224121110598.png" alt="image-20200224121110598"></p>
+<h2 id="案例-2"><a href="#案例-2" class="headerlink" title="案例"></a>案例</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/redis%E6%B6%88%E6%81%AF%E8%AE%A2%E9%98%85.gif" alt="redis消息订阅"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224121515934.png" alt="image-20200224121515934"></p>
+<h1 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h1><h2 id="介绍-11"><a href="#介绍-11" class="headerlink" title="介绍"></a>介绍</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224121635759.png" alt="image-20200224121635759"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224121700797.png" alt="image-20200224121700797"></p>
+<h2 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h2><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224140815760.png" alt="image-20200224140815760"></p>
+<h2 id="案例-3"><a href="#案例-3" class="headerlink" title="案例"></a>案例</h2><p>三个不同端口模拟三台不同redis，6379、6380、6381</p>
+<p>一开始 使用 <code>info replication</code>显示都是master</p>
+<p>设置完 <code>slaveof ip</code>之后</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224141417261.png" alt="image-20200224141417261"></p>
+<p> 测试主从复制</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224141035193.png" alt="image-20200224141035193"></p>
+<h2 id="常用3招"><a href="#常用3招" class="headerlink" title="常用3招"></a>常用3招</h2><h3 id="一主二从"><a href="#一主二从" class="headerlink" title="一主二从"></a>一主二从</h3><h4 id="1、读写分离"><a href="#1、读写分离" class="headerlink" title="1、读写分离"></a>1、读写分离</h4><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224141754009.png" alt="image-20200224141754009"></p>
+<h4 id="2、主机关闭死亡"><a href="#2、主机关闭死亡" class="headerlink" title="2、主机关闭死亡"></a>2、主机关闭死亡</h4><p>从机原地待命，主机上线，从机续接 继续</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224142042203.png" alt="image-20200224142042203"></p>
+<h4 id="3、从机关闭死亡"><a href="#3、从机关闭死亡" class="headerlink" title="3、从机关闭死亡"></a>3、从机关闭死亡</h4><p>与master断开连接，重新连接必须要重新slaveof接到主机上去，除非你写到配置文件中去</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224142522897.png" alt="image-20200224142522897"></p>
+<p>接上去之后，会重新复制一份，并且以后新的值只会增量添加，不会重新重复一整份</p>
+<h3 id="薪火相传"><a href="#薪火相传" class="headerlink" title="薪火相传"></a>薪火相传</h3><p><strong>去中心化</strong>，不用将所有的slave从机接到master上去</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224143241285.png" alt="image-20200224143241285"></p>
+<h3 id="反客为主"><a href="#反客为主" class="headerlink" title="反客为主"></a>反客为主</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224143325214.png" alt="image-20200224143325214"></p>
+<p>主机下线，80从机成为主机，81跟着80走<br><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224145848804.png" alt="image-20200224145848804"><br>原79主机上线，只是单独一台机器了</p>
+<h2 id="复制原理"><a href="#复制原理" class="headerlink" title="复制原理"></a>复制原理</h2><p>首次全量复制，以后增量复制</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224150129396.png" alt="image-20200224150129396"></p>
+<h2 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h2><h3 id="介绍-12"><a href="#介绍-12" class="headerlink" title="介绍"></a>介绍</h3><p>自动版反客为主</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224151303199.png" alt="image-20200224151303199"></p>
+<h3 id="配置-2"><a href="#配置-2" class="headerlink" title="配置"></a>配置</h3><p>1、类似制定协议<img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224151415549.png" alt="image-20200224151415549"></p>
+<p>2、编写</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224151543606.png" alt="image-20200224151543606"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor host6379 127.0.0.1 6379 1</span><br></pre></td></tr></table></figure>
+
+
+
+<p>3、启动</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224151657558.png" alt="image-20200224151657558"></p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224151713432.png" alt="image-20200224151713432"></p>
+<p>4、master挂了</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224152023480.png" alt="image-20200224152023480"></p>
+<p>5、等待一会，投票中</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224152131267.png" alt="image-20200224152131267"></p>
+<p>6、选举成功</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224152156801.png" alt="image-20200224152156801"></p>
+<p>7、原master 79端口上线，哨兵监控后，变成slave从机</p>
+<p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224152613439.png" alt="image-20200224152613439"></p>
+<h3 id="复制延时"><a href="#复制延时" class="headerlink" title="复制延时"></a>复制延时</h3><p><img src="http://img.mxranger.cn/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/image-20200224154659466.png" alt="image-20200224154659466"></p>
+<h1 id="jedis"><a href="#jedis" class="headerlink" title="jedis"></a>jedis</h1><h2 id="常用api"><a href="#常用api" class="headerlink" title="常用api"></a>常用api</h2><h2 id="事务-1"><a href="#事务-1" class="headerlink" title="事务"></a>事务</h2><h2 id="主从复制-1"><a href="#主从复制-1" class="headerlink" title="主从复制"></a>主从复制</h2><h2 id="jedispool"><a href="#jedispool" class="headerlink" title="jedispool"></a>jedispool</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">慕·歌</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/02/24/%E5%90%8E%E7%AB%AF/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/">http://example.com/2020/02/24/%E5%90%8E%E7%AB%AF/%E5%A5%BD%E5%A5%BD%E5%AD%A6Redis/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">MxRanger's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/redis/">redis</a></div><div class="post_share"><div class="social-share" data-image="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3127962649,1328757895&amp;fm=26&amp;gp=0.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/02/24/%E5%B0%8F%E6%8A%80%E5%B7%A7/iframe%E5%B5%8C%E5%A5%97%E9%A1%B5%E9%9D%A2/"><img class="prev-cover" src="http://img.mxranger.cn//image-20200224172715143.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">iframe嵌套页面展示</div></div></a></div><div class="next-post pull-right"><a href="/2020/01/29/%E9%AB%98%E8%B4%A8%E9%87%8F%E5%9B%BE%E7%89%87%E6%8E%A8%E8%8D%90/"><img class="next-cover" src="http://mxranger.tpddns.cn:9000/blog/fd126075-92be-4933-b213-e1a259dfa92c.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">高质量图片推荐</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">慕·歌</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">31</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/GavinGrayer"><i class="fas fa-bookmark"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:mxranger@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">守的云开见明月, 做时间的朋友☕^_^</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis"><span class="toc-number">1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.4.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.4.1.</span> <span class="toc-text">单进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.4.2.</span> <span class="toc-text">切换数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DBSIZE"><span class="toc-number">1.4.3.</span> <span class="toc-text">DBSIZE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.4.4.</span> <span class="toc-text">清除数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E9%94%AE"><span class="toc-number">1.5.</span> <span class="toc-text">Redis键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8"><span class="toc-number">1.5.1.</span> <span class="toc-text">常用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C"><span class="toc-number">1.5.2.</span> <span class="toc-text">常见操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#String%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.1.</span> <span class="toc-text">String字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="toc-number">2.1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-1"><span class="toc-number">2.1.2.</span> <span class="toc-text">常用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#set%E3%80%81get%E3%80%81del%E3%80%81append%E3%80%81strlen"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">set、get、del、append、strlen</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#incr%E3%80%81decr%E3%80%81incrby%E3%80%81decrby"><span class="toc-number">2.1.2.2.</span> <span class="toc-text">incr、decr、incrby、decrby</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#getrange-%E3%80%81setrange"><span class="toc-number">2.1.2.3.</span> <span class="toc-text">getrange 、setrange</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setex-set-with-expire"><span class="toc-number">2.1.2.4.</span> <span class="toc-text">setex(set with expire)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setnx-set-if-not-exist"><span class="toc-number">2.1.2.5.</span> <span class="toc-text">setnx(set if not exist)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mset%E3%80%81mget"><span class="toc-number">2.1.2.6.</span> <span class="toc-text">mset、mget</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.3.</span> <span class="toc-text">常用命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List%E5%88%97%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">List列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-2"><span class="toc-number">2.2.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.2.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#lpush%E3%80%81rpush%E3%80%81lrange"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">lpush、rpush、lrange</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lpop%E3%80%81rpop"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">lpop、rpop</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lindex"><span class="toc-number">2.2.2.3.</span> <span class="toc-text">lindex</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#llen"><span class="toc-number">2.2.2.4.</span> <span class="toc-text">llen</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lrem"><span class="toc-number">2.2.2.5.</span> <span class="toc-text">lrem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ltrim"><span class="toc-number">2.2.2.6.</span> <span class="toc-text">ltrim</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rpoplpush"><span class="toc-number">2.2.2.7.</span> <span class="toc-text">rpoplpush</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linsert-key-after-before"><span class="toc-number">2.2.2.8.</span> <span class="toc-text">linsert key after&#x2F;before</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.2.3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-1"><span class="toc-number">2.2.4.</span> <span class="toc-text">常用命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set%E9%9B%86%E5%90%88"><span class="toc-number">2.3.</span> <span class="toc-text">Set集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-3"><span class="toc-number">2.3.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-1"><span class="toc-number">2.3.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#sadd%E3%80%81smembers%E3%80%81sismember"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">sadd、smembers、sismember</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#srem-key-value"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">srem key value</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#smove"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">smove</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E9%9B%86%E5%90%88%E7%B1%BB"><span class="toc-number">2.3.2.4.</span> <span class="toc-text">数学集合类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-2"><span class="toc-number">2.3.3.</span> <span class="toc-text">常用命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash%E5%93%88%E5%B8%8C"><span class="toc-number">2.4.</span> <span class="toc-text">Hash哈希</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-4"><span class="toc-number">2.4.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-2"><span class="toc-number">2.4.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#hset%E3%80%81hget%E3%80%81hmset%E3%80%81hmget%E3%80%81hgetall%E3%80%81hdel"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">hset、hget、hmset、hmget、hgetall、hdel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hlen"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">hlen</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hexists"><span class="toc-number">2.4.2.3.</span> <span class="toc-text">hexists</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hkeys%E3%80%81hvals"><span class="toc-number">2.4.2.4.</span> <span class="toc-text">hkeys、hvals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hincrby%E3%80%81hincrbyfloat"><span class="toc-number">2.4.2.5.</span> <span class="toc-text">hincrby、hincrbyfloat</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-3"><span class="toc-number">2.4.3.</span> <span class="toc-text">常用命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zset-sorted-set-%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="toc-number">2.5.</span> <span class="toc-text">Zset(sorted set)有序集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-5"><span class="toc-number">2.5.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-3"><span class="toc-number">2.5.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#zadd%E3%80%81zrange"><span class="toc-number">2.5.2.1.</span> <span class="toc-text">zadd、zrange</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zrangebyscore"><span class="toc-number">2.5.2.2.</span> <span class="toc-text">zrangebyscore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zrem"><span class="toc-number">2.5.2.3.</span> <span class="toc-text">zrem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zcard%E3%80%81zcount%E3%80%81zrank%E3%80%81zscore"><span class="toc-number">2.5.2.4.</span> <span class="toc-text">zcard、zcount、zrank、zscore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zrerank"><span class="toc-number">2.5.2.5.</span> <span class="toc-text">zrerank</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zrevrange"><span class="toc-number">2.5.2.6.</span> <span class="toc-text">zrevrange</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zrevrangebyscore"><span class="toc-number">2.5.2.7.</span> <span class="toc-text">zrevrangebyscore</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-4"><span class="toc-number">2.5.3.</span> <span class="toc-text">常用命令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#units%E5%8D%95%E4%BD%8D"><span class="toc-number">3.1.</span> <span class="toc-text">units单位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#include"><span class="toc-number">3.2.</span> <span class="toc-text">include</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#general%E9%80%9A%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">general通用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SNAPSHOTTING%E5%BF%AB%E7%85%A7"><span class="toc-number">3.4.</span> <span class="toc-text">SNAPSHOTTING快照</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#save"><span class="toc-number">3.4.1.</span> <span class="toc-text">save</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stop-write-on-bgsave-error"><span class="toc-number">3.4.2.</span> <span class="toc-text">stop-write-on-bgsave-error</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redcompression"><span class="toc-number">3.4.3.</span> <span class="toc-text">redcompression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdbchecksum"><span class="toc-number">3.4.4.</span> <span class="toc-text">rdbchecksum</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#replication%E5%A4%8D%E5%88%B6"><span class="toc-number">3.5.</span> <span class="toc-text">replication复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#security%E5%AE%89%E5%85%A8"><span class="toc-number">3.6.</span> <span class="toc-text">security安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#limits%E9%99%90%E5%88%B6"><span class="toc-number">3.7.</span> <span class="toc-text">limits限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#append-only-mode"><span class="toc-number">3.8.</span> <span class="toc-text">append only mode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-number">3.9.</span> <span class="toc-text">参数说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RDB-Redis-DataBase"><span class="toc-number">4.1.</span> <span class="toc-text">RDB(Redis DataBase)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-6"><span class="toc-number">4.1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fork"><span class="toc-number">4.1.2.</span> <span class="toc-text">fork</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#save%E9%85%8D%E7%BD%AE"><span class="toc-number">4.1.3.</span> <span class="toc-text">save配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91RDB%E5%BF%AB%E7%85%A7"><span class="toc-number">4.1.4.</span> <span class="toc-text">触发RDB快照</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">4.1.4.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%81%E7%94%A8RDB%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">4.1.5.</span> <span class="toc-text">禁用RDB持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#save%E5%91%BD%E4%BB%A4"><span class="toc-number">4.1.6.</span> <span class="toc-text">save命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2"><span class="toc-number">4.1.7.</span> <span class="toc-text">停止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">4.1.8.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOF%EF%BC%88Append-Only-File%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">AOF（Append Only File）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-7"><span class="toc-number">4.2.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">4.2.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D"><span class="toc-number">4.2.3.</span> <span class="toc-text">恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5"><span class="toc-number">4.2.3.1.</span> <span class="toc-text">异常情况</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE"><span class="toc-number">4.2.4.</span> <span class="toc-text">常见配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rewrite"><span class="toc-number">4.2.5.</span> <span class="toc-text">Rewrite</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-8"><span class="toc-number">4.2.5.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">4.2.5.2.</span> <span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-number">4.2.6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%BB%BA%E8%AE%AE"><span class="toc-number">4.2.7.</span> <span class="toc-text">性能建议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-9"><span class="toc-number">5.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-5"><span class="toc-number">5.2.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-number">5.3.</span> <span class="toc-text">操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%B8%B8%E4%BD%BF%E7%94%A8"><span class="toc-number">5.4.</span> <span class="toc-text">正常使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%BE%E5%BC%83%E4%BA%8B%E5%8A%A1"><span class="toc-number">5.5.</span> <span class="toc-text">放弃事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E4%BD%93%E8%BF%9E%E5%9D%90"><span class="toc-number">5.6.</span> <span class="toc-text">全体连坐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%A4%E5%A4%B4%E5%80%BA%E4%B8%BB"><span class="toc-number">5.7.</span> <span class="toc-text">冤头债主</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#watch%E7%9B%91%E6%8E%A7"><span class="toc-number">5.8.</span> <span class="toc-text">watch监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%82%B2%E8%A7%82%E9%94%81%E3%80%81%E4%B9%90%E8%A7%82%E9%94%81"><span class="toc-number">5.8.1.</span> <span class="toc-text">悲观锁、乐观锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-number">5.8.2.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-3"><span class="toc-number">5.8.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-4"><span class="toc-number">5.9.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E8%AE%A2%E9%98%85%E5%8F%91%E5%B8%83"><span class="toc-number">6.</span> <span class="toc-text">消息订阅发布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-10"><span class="toc-number">6.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-6"><span class="toc-number">6.2.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2"><span class="toc-number">6.3.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="toc-number">7.</span> <span class="toc-text">主从复制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-11"><span class="toc-number">7.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-1"><span class="toc-number">7.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-3"><span class="toc-number">7.3.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A83%E6%8B%9B"><span class="toc-number">7.4.</span> <span class="toc-text">常用3招</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E"><span class="toc-number">7.4.1.</span> <span class="toc-text">一主二从</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB"><span class="toc-number">7.4.1.1.</span> <span class="toc-text">1、读写分离</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E4%B8%BB%E6%9C%BA%E5%85%B3%E9%97%AD%E6%AD%BB%E4%BA%A1"><span class="toc-number">7.4.1.2.</span> <span class="toc-text">2、主机关闭死亡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E4%BB%8E%E6%9C%BA%E5%85%B3%E9%97%AD%E6%AD%BB%E4%BA%A1"><span class="toc-number">7.4.1.3.</span> <span class="toc-text">3、从机关闭死亡</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%96%AA%E7%81%AB%E7%9B%B8%E4%BC%A0"><span class="toc-number">7.4.2.</span> <span class="toc-text">薪火相传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%AE%A2%E4%B8%BA%E4%B8%BB"><span class="toc-number">7.4.3.</span> <span class="toc-text">反客为主</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86"><span class="toc-number">7.5.</span> <span class="toc-text">复制原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.6.</span> <span class="toc-text">哨兵模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-12"><span class="toc-number">7.6.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-2"><span class="toc-number">7.6.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E5%BB%B6%E6%97%B6"><span class="toc-number">7.6.3.</span> <span class="toc-text">复制延时</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jedis"><span class="toc-number">8.</span> <span class="toc-text">jedis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8api"><span class="toc-number">8.1.</span> <span class="toc-text">常用api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1-1"><span class="toc-number">8.2.</span> <span class="toc-text">事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6-1"><span class="toc-number">8.3.</span> <span class="toc-text">主从复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jedispool"><span class="toc-number">8.4.</span> <span class="toc-text">jedispool</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/11/13/%E5%88%A9%E7%94%A8MINIO%E7%BB%99%E5%8D%9A%E5%AE%A2%E5%81%9A%E5%9B%BE%E5%BA%8A/" title="利用MINIO给博客做图床"><img src="http://mxranger.tpddns.cn:9000/blog/9cdce029-f42b-40f3-9064-7134b91368b1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="利用MINIO给博客做图床"/></a><div class="content"><a class="title" href="/2021/11/13/%E5%88%A9%E7%94%A8MINIO%E7%BB%99%E5%8D%9A%E5%AE%A2%E5%81%9A%E5%9B%BE%E5%BA%8A/" title="利用MINIO给博客做图床">利用MINIO给博客做图床</a><time datetime="2021-11-13T09:17:25.000Z" title="发表于 2021-11-13 17:17:25">2021-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/26/%E5%90%8E%E7%AB%AF/SpirngBoot%E6%95%B4%E5%90%88Mybatis%20Plus/" title="SpirngBoot整合Mybatis Plus"><img src="/images/mp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpirngBoot整合Mybatis Plus"/></a><div class="content"><a class="title" href="/2021/06/26/%E5%90%8E%E7%AB%AF/SpirngBoot%E6%95%B4%E5%90%88Mybatis%20Plus/" title="SpirngBoot整合Mybatis Plus">SpirngBoot整合Mybatis Plus</a><time datetime="2021-06-26T09:45:56.000Z" title="发表于 2021-06-26 17:45:56">2021-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/26/%E5%B0%8F%E6%8A%80%E5%B7%A7/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="常用工具类"><img src="/images/%E5%B7%A5%E5%85%B7%E7%B1%BB.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用工具类"/></a><div class="content"><a class="title" href="/2021/06/26/%E5%B0%8F%E6%8A%80%E5%B7%A7/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="常用工具类">常用工具类</a><time datetime="2021-06-26T09:27:56.000Z" title="发表于 2021-06-26 17:27:56">2021-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/19/hello-world/" title="Hello World"><img src="http://mxranger.tpddns.cn:9000/blog/fd126075-92be-4933-b213-e1a259dfa92c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2021/06/19/hello-world/" title="Hello World">Hello World</a><time datetime="2021-06-19T00:44:25.616Z" title="发表于 2021-06-19 08:44:25">2021-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/%E5%B0%8F%E6%8A%80%E5%B7%A7/%E5%8F%8C%E6%BB%9A%E5%8A%A8%E9%A1%B5%E9%9D%A2/" title="双滚动页面"><img src="/images/%E5%8F%8C%E6%BB%9A%E5%8A%A8%E9%A1%B5%E9%9D%A2/image-20210604111252516.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="双滚动页面"/></a><div class="content"><a class="title" href="/2021/06/04/%E5%B0%8F%E6%8A%80%E5%B7%A7/%E5%8F%8C%E6%BB%9A%E5%8A%A8%E9%A1%B5%E9%9D%A2/" title="双滚动页面">双滚动页面</a><time datetime="2021-06-04T03:12:56.000Z" title="发表于 2021-06-04 11:12:56">2021-06-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3127962649,1328757895&amp;fm=26&amp;gp=0.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By 慕·歌</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a target="_blank" rel="noopener" href="http://blog.mxranger.cn/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script></div><div class="aplayer no-destroy" data-id="6589190051" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener toc scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
